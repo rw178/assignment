@@ -26,7 +26,7 @@ public class AccountsServiceTest {
     @Test
     public void testSize() {
         assertThrows(MaxNumberOfAccountsReachedException.class, () -> {
-            for (int i = 0; i <= AccountsService.MAX_SIZE; i++) {
+            for (int i = 0; i <= AccountsService.MAX_NUMBER_OF_ACCOUNTS; i++) {
                 accountsService.addAccount(new Account(i, strategy));
             }
         });

@@ -2,8 +2,8 @@
 
 ## Remarks
 
-* the `ApplicationTester` class that reads a CSV file (using OpenCSV) can be used to run the simulation given a specific CSV file as
-  argument, e.g. `src/main/resources/input2.csv`
+* the `ApplicationTester` class that reads a CSV file (using OpenCSV) can be used to run the simulation given a specific
+  CSV file as argument, e.g. `src/main/resources/input2.csv`
   It should be noted that it is not meant to form part of the solution and is merely present as a helper
   mechanism (if needed) and as such no testing of this class was included
 * when running `ApplicationTester`, the results are simply printed to the console in the
@@ -12,8 +12,11 @@
   will be skipped.
 * a strategy per account allows the flexibility to have different criteria for accounts (e.g. a higher limit for high
   net worth individuals)
-* although no mechanism to remove transactions older than 60 seconds was implemented, given the hard limit on the number of
-  transactions and performance impact, this is something that would normally be discussed further with the relevant stakeholders 
+* although no mechanism to remove transactions older than 60 seconds was implemented, given the hard limit on the number
+  of transactions and potential performance impact, this is something that would normally be discussed further with the
+  relevant stakeholders
+* when an alert is triggered an exception is thrown which could potentially be too expensive an operation, so an
+  alternative might be preferable.
 * Amazon Coretto 17.0.10 was used for development
 
 ## Algorithm
