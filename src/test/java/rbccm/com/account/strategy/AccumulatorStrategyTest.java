@@ -23,17 +23,19 @@ public class AccumulatorStrategyTest {
 
     @Test
     public void testMaximumSize() {
+        LocalTime time = LocalTime.now();
         assertThrows(MaxNumberOfTransactionsException.class, () -> {
             for (long i = 0; i <= strategy.getMaxNumberOfTransactions(); i++) {
-                strategy.isAnAlertToBeRaised(123L, LocalTime.now().plusSeconds(i));
+                strategy.isAnAlertToBeRaised(123L, time.plusSeconds(i));
             }
         });
     }
 
     @Test
     public void testTransactionsHappeningAtTheSameTime() throws MaxNumberOfTransactionsException {
+        LocalTime time = LocalTime.now();
         for (long i = 0; i <= 10; i++) {
-            strategy.isAnAlertToBeRaised(123L, LocalTime.now());
+            strategy.isAnAlertToBeRaised(123L, time);
         }
         assertEquals(1, strategy.getNumberOfTransactions());
     }
