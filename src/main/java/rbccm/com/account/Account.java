@@ -15,7 +15,6 @@ public class Account {
         this.accountNumber = accountNumber;
         this.strategy = strategy;
     }
-
     public int getAccountNumber() {
         return accountNumber;
     }

@@ -1,5 +1,8 @@
 package rbccm.com.util;
 
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvValidationException;
 import rbccm.com.account.Account;
 import rbccm.com.account.exceptions.MaxNumberOfAccountsReachedException;
 import rbccm.com.account.exceptions.MaxNumberOfTransactionsException;
@@ -7,9 +10,8 @@ import rbccm.com.account.exceptions.ThresholdBreachedException;
 import rbccm.com.account.service.AccountsService;
 import rbccm.com.account.strategy.AccumulatorStrategy;
 
-import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -19,14 +21,12 @@ public class ApplicationTester {
 
     public static void main(String[] args) throws IOException {
         AccountsService accountsService = new AccountsService();
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(ApplicationTester.class.getResourceAsStream("/input2.csv")))) {
-            String line = br.readLine(); //skip the header
-            while ((line = br.readLine()) != null) {
-                String[] lineItems = line.split(",");
-                LocalTime time = LocalTime.parse(lineItems[0], formatter);
-                Long amount = Long.valueOf(lineItems[1]);
-                Integer accountNumber = Integer.valueOf(lineItems[2]);
-
+        try (CSVReader csvReader = new CSVReaderBuilder(new FileReader(args[0])).withSkipLines(1).build()) {
+            String[] values = null;
+            while ((values = csvReader.readNext()) != null) {
+                LocalTime time = LocalTime.parse(values[0], formatter);
+                Long amount = Long.valueOf(values[1]);
+                Integer accountNumber = Integer.valueOf(values[2]);
                 try {
                     if (!accountsService.hasAccount(accountNumber))
                         accountsService.addAccount(new Account(accountNumber, new AccumulatorStrategy()));
@@ -43,6 +43,8 @@ public class ApplicationTester {
                     System.out.println(time + "," + amount + "," + accountNumber + ",S"); //Skipped
                 }
             }
+        } catch (CsvValidationException e) {
+            throw new RuntimeException(e);
         }
     }
 }

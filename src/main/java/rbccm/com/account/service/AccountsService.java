@@ -6,9 +6,11 @@ import rbccm.com.account.exceptions.MaxNumberOfAccountsReachedException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A service to keep track of all created accounts and enforce restrictions on the number of accounts
+ */
 public class AccountsService {
     private final Map<Integer, Account> accounts = new HashMap<>();
-
     protected static final int MAX_SIZE = 5000;
 
     public void addAccount(Account account) throws MaxNumberOfAccountsReachedException {
@@ -24,6 +26,5 @@ public class AccountsService {
     public boolean hasAccount(Integer accountNumber) {
         return accounts.containsKey(accountNumber);
     }
-
 
 }

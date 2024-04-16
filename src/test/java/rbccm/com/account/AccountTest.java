@@ -21,11 +21,13 @@ public class AccountTest {
 
     @Test
     public void testAlert() throws MaxNumberOfTransactionsException {
+        LocalTime time = LocalTime.now();
         Account account = new Account(1, strategy);
         when(strategy.isAnAlertToBeRaised(any(), any())).thenReturn(false).thenReturn(true);
         assertThrows(ThresholdBreachedException.class, () -> {
-            account.processAmount(1L, LocalTime.NOON);
-            account.processAmount(1L, LocalTime.NOON);
+            account.processAmount(1L, time);
+            account.processAmount(1L, time);
         });
     }
+
 }

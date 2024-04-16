@@ -15,12 +15,11 @@ public interface ProcessingStrategy {
     default Long getTriggerValue() {
         return 50000L;
     }
-
     default Long getWindowSizeInSeconds() {
         return 60L;
     }
 
-    Integer getNumberOfTransactions();
+    Integer getNumberOfRecords();
 
 
 }

@@ -41,7 +41,7 @@ public class AccumulatorStrategy implements ProcessingStrategy {
     }
 
     @Override
-    public Integer getNumberOfTransactions() {
+    public Integer getNumberOfRecords() {
         return map.size();
     }
 }
