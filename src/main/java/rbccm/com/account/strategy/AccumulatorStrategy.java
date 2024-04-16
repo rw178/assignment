@@ -7,9 +7,7 @@ import java.util.TreeMap;
 
 public class AccumulatorStrategy implements ProcessingStrategy {
 
-
     private final TreeMap<LocalTime, TransactionDetail> map = new TreeMap<>();
-
     private LocalTime timeStampOfLastTransaction = null;
 
     @Override

@@ -10,7 +10,6 @@ public class Account {
 
     private final Integer accountNumber;
     private final ProcessingStrategy strategy;
-
     public Account(Integer accountNumber, ProcessingStrategy strategy) {
         this.accountNumber = accountNumber;
         this.strategy = strategy;

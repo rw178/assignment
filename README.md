@@ -2,11 +2,10 @@
 
 ## Remarks
 
-* the `ApplicationTester` class that reads a CSV file can be used to run the simulation given a specific CSV file as
-  input,
-  e.g. `src/main/resources/input2.csv`
+* the `ApplicationTester` class that reads a CSV file (using OpenCSV) can be used to run the simulation given a specific CSV file as
+  argument, e.g. `src/main/resources/input2.csv`
   It should be noted that it is not meant to form part of the solution and is merely present as a helper
-  mechanism (if needed) and as such no testing of this class was included. OpenCSV is used to process the CSV file.
+  mechanism (if needed) and as such no testing of this class was included
 * when running `ApplicationTester`, the results are simply printed to the console in the
   format `<time>,<amount>,<account number>,<AlertType>`, where **_AlertType_** is either **Y** , **N**  or
   **S**. **S** means that the allowable number of accounts or transactions have been reached and the record
