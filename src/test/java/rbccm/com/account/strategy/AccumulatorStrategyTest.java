@@ -51,7 +51,7 @@ public class AccumulatorStrategyTest {
     }
 
     @Test
-    public void testThresholdBreach() throws MaxNumberOfTransactionsException {
+    public void testThresholdBreaches() throws MaxNumberOfTransactionsException {
         LocalTime time = LocalTime.now();
         assertFalse(strategy.isAnAlertToBeRaised(10000L, time.plusSeconds(0)));
         assertFalse(strategy.isAnAlertToBeRaised(10000L, time.plusSeconds(10)));
@@ -62,4 +62,27 @@ public class AccumulatorStrategyTest {
         assertFalse(strategy.isAnAlertToBeRaised(25000L, time.plusSeconds(300)));
     }
 
+    @Test
+    public void testTransactionBeforeWindow() throws MaxNumberOfTransactionsException {
+        LocalTime time = LocalTime.now();
+        assertTrue(strategy.isAnAlertToBeRaised(100000L, time.plusSeconds(0)));
+        assertTrue(strategy.isAnAlertToBeRaised(1000L, time.plusSeconds(0)));
+        assertFalse(strategy.isAnAlertToBeRaised(10000L, time.plusSeconds(61)));
+    }
+
+    @Test
+    public void testTransactionOnBorderOfWindow() throws MaxNumberOfTransactionsException {
+        LocalTime time = LocalTime.now();
+        assertFalse(strategy.isAnAlertToBeRaised(1000L, time.plusSeconds(0)));
+        assertFalse(strategy.isAnAlertToBeRaised(10000L, time.plusSeconds(1)));
+        assertTrue(strategy.isAnAlertToBeRaised(40000L, time.plusSeconds(61)));
+    }
+
+    @Test
+    public void testTransactionInWindow() throws MaxNumberOfTransactionsException {
+        LocalTime time = LocalTime.now();
+        assertFalse(strategy.isAnAlertToBeRaised(1000L, time.plusSeconds(0)));
+        assertFalse(strategy.isAnAlertToBeRaised(10000L, time.plusSeconds(10)));
+        assertTrue(strategy.isAnAlertToBeRaised(40000L, time.plusSeconds(61)));
+    }
 }
