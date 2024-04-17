@@ -23,7 +23,7 @@
 ## Algorithm
 
 * a `TreeMap` is used to store the stream of transaction entries. This allows for searches of runtime `O(log n)` to find
-  the floor key, i.e. the transaction just before/on the relevant time window
+  the ceiling key, i.e. the first entry in the relevant time window
 * each `TransactionDetail` entry contains a `runningTotal` field which is the sum of all previous transaction amounts up
   to that point. This value (beginning of window) is subtracted from the current (end of window) running total to
   calculate the window's running total

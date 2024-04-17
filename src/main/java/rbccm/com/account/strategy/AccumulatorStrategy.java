@@ -23,13 +23,15 @@ public class AccumulatorStrategy implements ProcessingStrategy {
             if (previousItem.time().equals(transactionTime)) {
                 map.remove(transactionTime); //remove the previous transaction if it occurred at the same time and replace with a (new) cumulative transaction
             } else {
-                //Find the "closest" record in the given time frame
-                LocalTime timeOfClosestTransaction = map.floorKey(transactionTime.minusSeconds(getWindowSizeInSeconds()));
+                //Find the first record in the given time frame
+                LocalTime timeOfClosestTransaction = map.ceilingKey(transactionTime.minusSeconds(getWindowSizeInSeconds()));
                 if (timeOfClosestTransaction != null) {
                     if (timeOfClosestTransaction.plusSeconds(getWindowSizeInSeconds()).equals(transactionTime)) //An exact match, i.e. it falls withing the window
                         runningTotal = runningTotal - map.get(timeOfClosestTransaction).runningTotal() + map.get(timeOfClosestTransaction).amount();
-                    else
-                        runningTotal = runningTotal - map.get(timeOfClosestTransaction).runningTotal() - map.get(timeOfClosestTransaction).amount();
+                    if (timeOfClosestTransaction.plusSeconds(getWindowSizeInSeconds()).isAfter(transactionTime))
+                        runningTotal = runningTotal - map.get(timeOfClosestTransaction).runningTotal();
+                } else {
+                    runningTotal = 0L; //No existing records in the window
                 }
             }
         }
