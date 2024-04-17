@@ -26,7 +26,7 @@ public class IntegrationTest {
     }
 
     @Test
-    @Disabled("Unable to run this test on the GitHub runner")
+  //  @Disabled("Unable to run this test on the GitHub runner, so it is disabled here")
     public void stressTest() throws MaxNumberOfAccountsReachedException, MaxNumberOfTransactionsException, ThresholdBreachedException {
         for (int i = 0; i < MAX_NUMBER_OF_ACCOUNTS; i++) {
             for (int j = 0; j < 10000; j++) {
